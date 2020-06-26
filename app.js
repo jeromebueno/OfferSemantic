@@ -43,8 +43,8 @@ app.get('/',(req,res) => {
 
     fetch("https://query.wikidata.org/sparql", requestOptions)
       .then(response => response.json())
-      .then(result => {
-          res.render('index',{'companies':result})
+      .then(json => {
+          res.render('index',{'companies':json.results.bindings})
         })
       .catch(error => console.log('error', error));
 })

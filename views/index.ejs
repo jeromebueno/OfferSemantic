@@ -7,14 +7,6 @@
         </div>
       </div>
     <h1>Ajouter une fiche</h1>
-    <% for (var i = 0; i < companies.length; i++) { %>
-        <li class="timeline-yellow">
-            <div class="timeline-time">
-                <span class="date" style="text-align:left">
-                <%= companies.itemLabel.value %></span>
-            </div>
-        </li>
-    <% } %>
     <form action="/insert-offer" method="POST">
         <div class="form-group">
         <label for="URL">URL de l'offre</label>
@@ -23,11 +15,9 @@
         <div class="form-group">
             <label for="company">Entreprise</label>
             <select class="form-control" id="company">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+                <% for (var i = 0; i < companies.length; i++) { %>
+                    <option value='<%= companies[i].item.value %>'><%= companies[i].itemLabel.value %></option>
+                <% } %>
             </select>
         </div>
         <button type="submit" class="btn btn-primary btn-block">Submit</button>

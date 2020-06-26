@@ -16,7 +16,7 @@ myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 app.post('/insert-offer', (req, res) => {
     var urlencoded = new URLSearchParams();
     urlencoded.append("update", 
-    "PREFIX wd: <http://www.wikidata.org/entity/> \nPREFIX js: <http://example.com/vocabulary#>\n\nINSERT DATA\n{\n    GRAPH <https://www.esgi.fr/2019/ESGI5/IW1/projet8>\n    {\n        wd:Q1161666  js:job <https://jobs.thalesgroup.com/job/-/-/1766/16517435?source=indeed> .\n    }\n}");
+    "PREFIX wd: <http://www.wikidata.org/entity/> \nPREFIX js: <http://example.com/vocabulary#>\n\nINSERT DATA\n{\n    GRAPH <https://www.esgi.fr/2019/ESGI5/IW1/projet8>\n    {\n        wd:"+ req.body.company.split('/').pop() +"  js:job <"+ req.body.offer_url + "> .\n    }\n}");
     
     var requestOptions = {
     method: 'POST',
@@ -26,8 +26,11 @@ app.post('/insert-offer', (req, res) => {
     };
     
     fetch("https://sandbox.bordercloud.com/sparql", requestOptions)
-    .then(response => response.json())
-    .then(json => res.render('index',{ added: 'true' }))
+    .then(response => {
+      if(response.status == "200"){
+        response.redirect('/')
+      }
+    })
     .catch(error => console.log('error', error));
 })
 
